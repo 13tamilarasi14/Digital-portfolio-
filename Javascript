@@ -1,0 +1,44 @@
+// Basic interactions: nav toggle, contact form handler, year
+document.addEventListener('DOMContentLoaded', () => {
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // nav toggle for mobile
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', () => {
+    if (!nav.style.display || nav.style.display === 'none') {
+      nav.style.display = 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.gap = '10px';
+    } else {
+      nav.style.display = 'none';
+    }
+  });
+
+  // contact form: prevent actual submit and simulate send (replace this with real backend later)
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = data.get('name').trim();
+    const email = data.get('email').trim();
+    const message = data.get('message').trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill all fields before sending.');
+      return;
+    }
+
+    // Here you could send the data using fetch() to a server or Formspree/EmailJS.
+    // For this template we just show a friendly message and reset the form.
+    alert(`Thanks ${name}! Your message has been "sent".\n(Email: 13tamilarasi14@gmail.com)`);
+    form.reset();
+  });
+
+  // small reduce-motion respect
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) {
+    document.querySelectorAll('.shape').forEach(s => s.style.animation = 'none');
+  }
+});
